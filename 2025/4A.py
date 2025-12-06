@@ -1,16 +1,16 @@
 def check_grid(grid: list[list[str]], m: int, n: int, i: int, j: int) -> bool:
-    if grid[i][j] != '@':
+    if grid[i][j] != "@":
         return False
-    
+
     cnt = 0
     for x in range(-1, 2):
         for y in range(-1, 2):
             if x == 0 and y == 0:
                 continue
-            pi, pj = i+x, j+y
-            if pi < 0 or pi >=m or pj < 0 or pj >= n:
+            pi, pj = i + x, j + y
+            if pi < 0 or pi >= m or pj < 0 or pj >= n:
                 continue
-            if grid[pi][pj] == '@':
+            if grid[pi][pj] == "@":
                 cnt += 1
     return cnt < 4
 
@@ -29,7 +29,7 @@ with open("4A.txt", "r") as file:
         for i in range(m):
             new_grid_i = ""
             for j in range(n):
-                if check_grid(grid, m,n, i,j):
+                if check_grid(grid, m, n, i, j):
                     tmp += 1
                     new_grid_i += "."
                 else:

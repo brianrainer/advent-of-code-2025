@@ -3,13 +3,8 @@ def is_nice(s: str) -> bool:
     vowel = 0
 
     is_double = False
-    
-    naughty_dict = {
-        "a": "b",
-        "c": "d",
-        "p": "q",
-        "x": "y"
-    }
+
+    naughty_dict = {"a": "b", "c": "d", "p": "q", "x": "y"}
     is_naughty = False
 
     for i, ch in enumerate(s):
@@ -17,7 +12,7 @@ def is_nice(s: str) -> bool:
             vowel += 1
         if i == 0:
             continue
-        prev = s[i-1]
+        prev = s[i - 1]
         if prev == ch:
             is_double = True
         if prev in naughty_dict and naughty_dict[prev] == ch:
@@ -31,21 +26,19 @@ def is_nice_new(s: str) -> bool:
     has_two_pair = False
 
     for i in range(2, len(s)):
-        if s[i-2] == s[i]:
+        if s[i - 2] == s[i]:
             is_between = True
             break
-    
-    last_position = {
-        s[0:2]: 1
-    }
+
+    last_position = {s[0:2]: 1}
 
     for i in range(3, len(s)):
-        s2 = s[i-2:i]
+        s2 = s[i - 2 : i]
         if s2 in last_position:
-            if last_position[s2] < i-2:
+            if last_position[s2] < i - 2:
                 has_two_pair = True
                 break
-        last_position[s2] = i-1
+        last_position[s2] = i - 1
     return is_between and has_two_pair
 
 

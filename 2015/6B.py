@@ -11,19 +11,19 @@ with open("6A.txt", "r") as file:
         ex, ey = [int(x) for x in end.split(",")]
 
         if q[0] == "toggle":
-            for i in range(sx, ex+1):
-                for j in range(sy, ey+1):
+            for i in range(sx, ex + 1):
+                for j in range(sy, ey + 1):
                     grid[i][j] += 2
         elif q[1] == "on":
-            for i in range(sx, ex+1):
-                for j in range(sy, ey+1):
+            for i in range(sx, ex + 1):
+                for j in range(sy, ey + 1):
                     grid[i][j] += 1
         else:
-            for i in range(sx, ex+1):
-                for j in range(sy, ey+1):
+            for i in range(sx, ex + 1):
+                for j in range(sy, ey + 1):
                     grid[i][j] -= 1
                     grid[i][j] = max(grid[i][j], 0)
-    
+
     ans = 0
     for i in range(1000):
         for j in range(1000):

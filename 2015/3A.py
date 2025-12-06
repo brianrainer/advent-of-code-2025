@@ -5,27 +5,27 @@ with open("3A.txt", "r") as file:
     rx, ry = 0, 0
 
     vis = set()
-    vis.add((x,y))
+    vis.add((x, y))
 
     is_santa = True
     for ch in line:
         dx, dy = 0, 0
-        if ch == '^':
+        if ch == "^":
             dx = -1
-        elif ch == 'v':
+        elif ch == "v":
             dx = 1
-        elif ch == '<':
+        elif ch == "<":
             dy = -1
-        elif ch == '>':
+        elif ch == ">":
             dy = 1
 
         if is_santa:
             x += dx
             y += dy
-            vis.add((x,y))
+            vis.add((x, y))
         else:
             rx += dx
             ry += dy
-            vis.add((rx,ry))
+            vis.add((rx, ry))
         is_santa = not is_santa
     print(len(vis))

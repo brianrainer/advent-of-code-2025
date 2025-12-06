@@ -8,7 +8,7 @@ with open("1A.txt", "r") as file:
         turn = int(line[1:])
 
         for _ in range(turn):
-            if direction == 'L':
+            if direction == "L":
                 current -= 1
             else:
                 current += 1
