@@ -194,12 +194,12 @@ JHyIKA,LDEFMN,3wu,str,qp,onm,lk,ji,hg,efd,cab,XWY,TRSU,PBOQGC,
 
 D = "On the"
 E = "\n"
+H = ",\n"
 F = "A Partridge in a Pear Tree." + E
 G = "day of Christmas" + E
-H = ",\n"
 
 
-nxt_char_map = {
+Z = {
     "0": "day of Christmas%sMy true love sent to me%s" % (E, E),
     "1": "%s%s%s" % (F, E, D),
     "2": "Two Turtle Doves, and" + E,
@@ -229,6 +229,7 @@ nxt_char_map = {
     "k": " Eleventh ",
     "l": " Twelfth ",
 }
+nxt_char_map = Z
 
 
 nxt_encrypt_message = ""
@@ -245,7 +246,6 @@ for i in range(12):
 nxt_encrypt_message += "F"
 # print(nxt_encrypt_message)
 
-
 nxt_decrypt_message = ""
 for ch in nxt_encrypt_message:
     if ch == ",":
@@ -259,4 +259,41 @@ for i in range(len(nxt_decrypt_message) - 1):
         print(i, nxt_decrypt_message[i])
 # print(nxt_decrypt_message)
 assert nxt_decrypt_message[:-1] == song
-print(nxt_decrypt_message)
+# print(nxt_decrypt_message)
+
+
+Y = "Da01b021c0321d04321e054321f0654321g07654321h087654321i0987654321j0A987654321k0BA987654321l0CBA98765432F"
+M = "".join([Z[y] for y in Y])
+
+Z_literal = "Z={"
+for key, val in Z.items():
+    if key >= "a":
+        Z_literal += '"%s":"%s"' % (key, val)
+        if key != "l":
+            Z_literal += ","
+        continue
+    if "D" <= key <= "F":
+        Z_literal += '"%s":%s,' % (key, key)
+        continue
+    if ("3" <= key <= "9") or ("A" <= key <= "C"):
+        Z_literal += '"%s":"%s"+H,' % (key, val[:-2])
+        continue
+    if key == "2":
+        Z_literal += '"%s":"%s"+E,' % (key, val[:-1])
+    if key == "0":
+        Z_literal += (
+            '"0":"day of Christmas%' + "sMy true love sent to me%" + 's"%(E,E),'
+        )
+    if key == "1":
+        Z_literal += '"1":"%' + "s%" + "s%" + 's"%' + "(F,E,D),"
+Z_literal += "}"
+# print(Z_literal)
+
+
+def final_compression():
+    # https://code.golf/12-days-of-christmas#python
+    # 814 bytes, 814 chars
+    return """D,E,H="On the","\n",",\n"
+F,G,Y="A Partridge in a Pear Tree."+E,"day of Christmas"+E,"Da01b021c0321d04321e054321f0654321g07654321h087654321i0987654321j0A987654321k0BA987654321l0CBA98765432F"
+Z={"0":"day of Christmas%sMy true love sent to me%s"%(E,E),"1":"%s%s%s"%(F,E,D),"2":"Two Turtle Doves, and"+E,"3":"Three French Hens"+H,"4":"Four Calling Birds"+H,"5":"Five Gold Rings"+H,"6":"Six Geese-a-Laying"+H,"7":"Seven Swans-a-Swimming"+H,"8":"Eight Maids-a-Milking"+H,"9":"Nine Ladies Dancing"+H,"A":"Ten Lords-a-Leaping"+H,"B":"Eleven Pipers Piping"+H,"C":"Twelve Drummers Drumming"+H,"D":D,"E":E,"F":F,"a":" First ","b":" Second ","c":" Third ","d":" Fourth ","e":" Fifth ","f":" Sixth ","g":" Seventh ","h":" Eighth ","i":" Ninth ","j":" Tenth ","k":" Eleventh ","l":" Twelfth "}
+print("".join([Z[y] for y in Y]))"""
