@@ -5,28 +5,24 @@ def get_lines(filename: str) -> list[str]:
 
 
 def decompress_data(s: str) -> int:
-    has_d = False
-    for ch in s:
-        if ch == "(":
-            has_d = True
-    if not has_d:
+    if not any([ch == "(" for ch in s]):
         return len(s)
 
     n = len(s)
     i = 0
     res = 0
     while i < len(s):
-        if s[i] == "(":
-            j = i + 1
-            while j < n and s[j] != ")":
-                j += 1
-            rep_len, rep_count = [int(x) for x in s[i + 1 : j].split("x")]
-            dec_len = decompress_data(s[j + 1 : j + 1 + rep_len])
-            res += dec_len * rep_count
-            i = j + rep_len + 1
+        if s[i] != "(":
+            res += 1
+            i += 1
             continue
-        res += 1
-        i += 1
+        j = i + 1
+        while j < n and s[j] != ")":
+            j += 1
+        rep_len, rep_count = [int(x) for x in s[i + 1 : j].split("x")]
+        dec_len = decompress_data(s[j + 1 : j + 1 + rep_len])
+        res += dec_len * rep_count
+        i = j + rep_len + 1
     return res
 
 
