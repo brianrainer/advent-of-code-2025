@@ -50,6 +50,42 @@ def count_path(adj_list: dict[list[str]], start, end):
     print(ans)
 
 
+def count_path_topo(adj_list: dict[list[str]], start, end):
+    in_degree, ways = {}, {}
+    for u in adj_list:
+        in_degree[u] = 0
+        ways[u] = 0
+    for u in adj_list:
+        for v in adj_list[u]:
+            in_degree[v] += 1
+
+    q = deque()
+    for u in adj_list:
+        if in_degree[u] == 0:
+            q.append(u)
+
+    topo = []
+    while q:
+        u = q.popleft()
+        topo.append(u)
+        for v in adj_list[u]:
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                q.append(v)
+
+    # for i in range(len(topo)):
+    #     if topo[i] in ("svr", "dac", "fft", "out"):
+    #         print(i, topo[i])
+
+    ways[start] = 1
+    for u in topo:
+        for v in adj_list[u]:
+            ways[v] += ways[u]
+
+    print(ways[end])
+    return ways[end]
+
+
 def example():
     fname = "input/2025/11E.txt"
     data = get_data(get_lines(fname))
@@ -62,6 +98,12 @@ def main():
     data = get_data(get_lines(fname))
     data["out"] = []
     count_path(data, "you", "out")
+
+    # print(is_cyclic_topo(data))
+    p1 = count_path_topo(data, "svr", "fft")
+    p2 = count_path_topo(data, "fft", "dac")
+    p3 = count_path_topo(data, "dac", "out")
+    print(p1 * p2 * p3)
 
 
 example()
